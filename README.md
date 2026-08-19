@@ -1,8 +1,8 @@
 # Deliver a processed creator asset with a tool-calling loop
 
-This example walks one piece of creator work from processing to delivery. A model call reads the asset context and returns a small decision; Python turns that decision into visible actions for the delivery and subscriber-update steps.
+This example tracks one piece of creator work from processing to delivery. A model call reads the asset context and returns a small decision; Python turns that decision into visible actions for the delivery and subscriber-update steps.
 
-Infrai keeps the call in the OpenAI Python shape: use an OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. The workflow stays focused on content operations, so the decision code is easy to test without making a live request.
+Infrai keeps the call in the OpenAI Python shape: use an OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. The workflow stays focused on content operations, so the decision code is easy to test without making a live request. That's real revenue-per-hour value when you ship weekly.
 
 ## The workflow
 
