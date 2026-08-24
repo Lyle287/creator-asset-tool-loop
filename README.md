@@ -1,8 +1,8 @@
 # Deliver a processed creator asset with a tool-calling loop
 
-This example tracks one piece of creator work from processing to delivery. A model call reads the asset context and returns a small decision; Python turns that decision into visible actions for the delivery and subscriber-update steps.
+This example tracks one piece of creator work from processing to delivery. A model call reads the asset context and returns a small decision. Python turns that decision into visible actions for the delivery and subscriber-update steps.
 
-Infrai keeps the call in the OpenAI Python shape: use an OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. The workflow stays focused on content operations, so the decision code is easy to test without making a live request. That's real revenue-per-hour value when you ship weekly.
+Infrai keeps the call in the OpenAI Python shape: use an OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. The workflow stays focused on content operations, so the decision code is easy to test without making a live request.
 
 ## The workflow
 
@@ -12,7 +12,7 @@ Infrai keeps the call in the OpenAI Python shape: use an OpenAI-compatible `base
 - A processed asset with subscribers also produces `notify_subscribers`.
 - An unprocessed asset stays at `review_content`.
 
-The printed result is the handoff a real worker could use to call its delivery and update services. Those service calls are intentionally represented by action names here; the example's boundary is the model decision and the state transition that follows it.
+The printed result is the handoff a real worker could use to call its delivery and update services. Those service calls are intentionally represented by action names here. The example's boundary is the model decision and the state transition that follows it.
 
 ## Run it locally
 
@@ -38,7 +38,7 @@ python3 -m unittest test_creator_workflow.py
 
 ## The one real gotcha
 
-The model's JSON is an input boundary, so keep its fields narrow and validate them before acting. This example converts the two fields into `ProcessingResult`; downstream code receives only the three action names and never needs to inspect raw model text.
+The model's JSON is an input boundary. Keep its fields narrow and validate them before acting. This example converts the two fields into `ProcessingResult`. Downstream code receives only the three action names and never needs to inspect raw model text.
 
 ## License
 
