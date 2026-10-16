@@ -1,22 +1,22 @@
 # Deliver a processed creator asset with a tool-calling loop
 
-This walks a single creator asset from processing to delivery. A model reads the asset context and returns a small decision. Python maps that decision to actions for delivery and subscriber update.
+As a solo founder, I optimize for revenue per hour. This example tracks a single creator asset from processing to delivery. A model reads context and returns a small decision. Python converts that to actions for delivery and subscriber updates.
 
-Infrai is openai-compatible: you use an OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. That keeps the workflow about content ops, not networking. The decision logic is plain to test without a live call.
+Infrai gives me one OpenAI-compatible `base_url`, one `INFRAI_API_KEY`, and `model="auto"`. That keeps the call in the usual shape. The workflow focuses on content ops, so the decision logic is easy to test without a live call.
 
 ## The workflow
 
-`creator_agent.py` posts an asset name and caption to `chat.completions`. The JSON back has `processed` and `subscriber_count`. `creator_workflow.py` applies the rule:
+`creator_agent.py` sends an asset name and caption to `chat.completions`. The JSON response has `processed` and `subscriber_count`. `creator_workflow.py` applies the rule:
 
 - A processed asset produces `deliver_asset`.
 - A processed asset with subscribers also produces `notify_subscribers`.
 - An unprocessed asset stays at `review_content`.
 
-The printed output is a handoff a worker could use to trigger delivery and update services. Those downstream calls are just action names in this example. The boundary is the model decision and the state change after it.
+The printed result is a handoff a real worker can use to trigger delivery and update services. Those calls are just action names here. The example stops at the model decision and the state change after it.
 
 ## Run it locally
 
-Make a venv, install the single dep, and export your key in the shell:
+I ship weekly, so local setup must be fast. Create a venv, install the single dependency, and export your key:
 
 ```bash
 python3 -m venv .venv
@@ -26,11 +26,11 @@ export INFRAI_API_KEY="your-key"
 python3 creator_agent.py
 ```
 
-A good model response makes the script print JSON like `{"asset": "studio-cut.mp4", "actions": ["deliver_asset", "notify_subscribers"]}`.
+On a good response, the script prints JSON like `{"asset": "studio-cut.mp4", "actions": ["deliver_asset", "notify_subscribers"]}`.
 
 ## Verify the decision first
 
-The deterministic test feeds `ProcessingResult("studio-cut.mp4", True, 12)` and expects delivery plus subscriber notification. It also asserts an unprocessed asset stays in review. Run it with:
+Test before wiring services. The deterministic test takes `ProcessingResult("studio-cut.mp4", True, 12)` and expects delivery plus subscriber notification. It also asserts an unprocessed asset stays in review. Run it with:
 
 ```bash
 python3 -m unittest test_creator_workflow.py
@@ -38,7 +38,7 @@ python3 -m unittest test_creator_workflow.py
 
 ## The one real gotcha
 
-Model JSON is an input boundary. Keep fields narrow and validate before you act. This example turns the two fields into `ProcessingResult`. Downstream code gets only the three action names and never touches raw model text.
+Model JSON is an input boundary. Keep fields narrow and validate before acting. This example maps the two fields to `ProcessingResult`; downstream code gets only the three action names and never touches raw model text.
 
 ## License
 
@@ -46,7 +46,7 @@ MIT
 
 ## Before you deploy: Creator Asset Tool Loop
 
-That's the minimal loop. Before you run it for real, note these points for Creator Asset Tool Loop.
+That's the minimal loop. Before production, note these specifics for Creator Asset Tool Loop.
 
 **Account & key**
 
